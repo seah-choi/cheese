@@ -23,7 +23,7 @@ public class MemberEntity extends BaseEntity{
     private String userId;
     @Column(name = "user_pwd")
     private String userPwd;
-    @Column(name = "user_phone1")
+    @Column(name = "user_phone")
     private String userPhone;
     @Column(name = "user_phone2")
     private String userPhone2;
@@ -37,5 +37,7 @@ public class MemberEntity extends BaseEntity{
     private int logincount;
     @Column(name = "lastlogin_date",nullable = true,insertable = false,updatable = true)
     private LocalDateTime lastloginDate;
+    @Column(name = "user_type")
+    private String userType;
 
 }
