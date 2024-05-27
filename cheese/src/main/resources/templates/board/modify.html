@@ -28,12 +28,12 @@
 </div>
 
 <main style="width: 800px;margin: 0 auto;margin-top: 100px;">
-    <form>
+    <form action="/bbs/modify" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;">글 수정</h1>
         <div class="mb-3">
-            <input type="text" class="form-control" id="exampleFormControlInput1" value="">
+            <input type="text" class="form-control"  id="title" name="bbs_title" value="" placeholder="제목을 입력하세요">
         </div>
-        <input type="file" class="form-control" name="files" id="file" multiple>
+        <input type="file" class="form-control" id="image" name="bbs_file1" multiple>
         <br>
         <div>
             <textarea id="summernote" name="bbs_content"></textarea>

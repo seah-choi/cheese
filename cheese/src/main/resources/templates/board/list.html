@@ -63,7 +63,7 @@
 <section class="ftco-section">
     <div class="container">
         <div class="searchBox">
-            <form role="search" id="frmSearch" class="searchForm">
+            <form action="/bbs/list" method="get" name="searchFrm">
                 <div class="row justify-content-center gubun">
                     <div class="col-md-3 mb-5 text-center d-flex justify-content-center">
                         <div class="col-md-6">
@@ -156,21 +156,38 @@
         </div>
 
 
-        <div class="row mt-5">
-            <div class="col text-center">
-                <div class="block-27">
-                    <ul>
-                        <li><a href="#">&lt;</a></li>
-                        <li class="active"><span>1</span></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&gt;</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+       <!-- <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <th:block th:if="${responseDTO.prev_page_plag == false}">
+                    <li class="page-item disabled">
+                </th:block>
+                <th:block th:if="${responseDTO.prev_page_plag == true}">
+                    <li class="page-item">
+                </th:block>
+                <a class="page-link" th:href="'/board/list?page='+(${responseDTO.page_block_start}-10)+${sort}+${responseDTO.linkParams}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+                <th:block th:each="number : ${#numbers.sequence(responseDTO.page_block_start, responseDTO.page_block_end)}">
+                    <th:block th:if="(${number}-1) == ${responseDTO.page}">
+                        <li class="page-item active"><a class="page-link" th:href="'/board/list?page='+(${number}-1)+${sort}+${responseDTO.linkParams}" th:text="${number}"></a></li>
+                    </th:block>
+                    <th:block th:if="(${number}-1) != ${responseDTO.page}">
+                        <li class="page-item"><a class="page-link" th:href="'/board/list?page='+(${number}-1)+${sort}+${responseDTO.linkParams}" th:text="${number}"></a></li>
+                    </th:block>
+                </th:block>
+                <th:block th:if="${responseDTO.next_page_plag == false}">
+                    <li class="page-item disabled">
+                </th:block>
+                <th:block th:if="${responseDTO.next_page_plag == true}">
+                    <li class="page-item">
+                </th:block>
+                <a class="page-link" th:href="'/board/list?page='+(${responseDTO.page_block_start}+10)+${sort}+${responseDTO.linkParams}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+            </ul>
+        </nav>-->
     </div>
 </section>
 
