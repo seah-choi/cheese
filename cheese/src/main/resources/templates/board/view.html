@@ -171,7 +171,7 @@
 
                         <div>
                             <div id="comment">
-                                <form name="frm" action="/adminBbsReply/regist" method="post">
+                                <form name="frm" action="/bbsReply/regist" method="post">
                                     <input type="hidden" name="member_id" value="${sessionScope.member_id}">
                                     <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
                                     <span>답변</span>&nbsp;<span id="cmCount">1</span>
@@ -187,7 +187,7 @@
                                             <c:forEach items="${reply}" var="reply">
                                                 <span style="font-weight: bold">bori</span>&nbsp;<span>2024-05-01</span>
                                                 <br>
-                                                <form name="frm" id="cmFrm" class="cmFrm" action="/adminBbsReply/delete" method="post">
+                                                <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
                                                     <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="댓글입니다" id="reply_content" readonly></p>
                                                     <c:if test="${reply.member_id == sessionScope.member_id}">
                                                         <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
@@ -213,10 +213,10 @@
 
                         <div class="topLine" style="display: flex;justify-content: center;">
                             <div>
-                                <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list?bbs_type=${bbs.bbs_category_code}'">목록</button>
+                                <button type="button" class="btn" id="btn_back" onclick="location.href='/board/list?bbs_type=${bbs.bbs_category_code}'">목록</button>
                             </div>
                             <div>
-                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify?bbs_idx=${bbs.bbs_idx}'">수정</button>
+                                <button type="button" class="btn" id="btn_modify" onclick="location.href='/board/modify?bbs_idx=${bbs.bbs_idx}'">수정</button>
                                 <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
                             </div>
                         </div>

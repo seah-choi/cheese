@@ -30,4 +30,14 @@ public class AdminController {
     public void modifyGET(){
 
     }
+
+    @GetMapping("/freeList")
+    public void freeListGET(){
+
+    }
+
+    @GetMapping("/freeView")
+    public void freeViewGET(){
+
+    }
 }
