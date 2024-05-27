@@ -125,13 +125,36 @@ public class MemberServiceImpl implements MemberService {
         return null;
     }
 
+
     @Override
-    public int checkId(String id) throws InsufficientStockException {
-        return 0;
+    @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
+    public int checkId(String id) throws InsufficientStockException{
+        if(id == null || id.trim().equals("")){
+            throw new InsufficientStockException("아이디를 입력해주세요.");
+        }
+        MemberEntity member = memberRepository.findByUserId(id);
+
+        if(member == null) {
+
+            return 0;
+        }else{
+
+            return 1;
+        }
+
     }
 
     @Override
+    @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
     public int checkEmail(String email1, String email2) throws InsufficientStockException {
-        return 0;
+        if(email1 == null || email2 == null || email1.trim().equals("") || email2.trim().equals("")){
+            throw new InsufficientStockException("이메일을 입력해주세요.");
+        }
+        MemberEntity member = memberRepository.findByUserEmail1AndUserEmail2(email1,email2);
+        if(member == null) {
+            return 0;
+        }else{
+            return 1;
+        }
     }
 }

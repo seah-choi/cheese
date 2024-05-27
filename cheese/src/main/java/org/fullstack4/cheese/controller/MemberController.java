@@ -51,6 +51,8 @@ public class MemberController {
         }
     }
 
+    //////////////////////////////////////////////////////회원 가입////////////////////////////////////////////////
+
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String Login(@RequestParam HashMap<String, Object> map, HttpServletRequest req,HttpServletResponse resp) throws Exception{
@@ -77,6 +79,55 @@ public class MemberController {
         }
         return new Gson().toJson(resultMap);
     }
+
+    @RequestMapping(value = "/idCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String checkId(@RequestParam HashMap<String, Object> map, HttpServletRequest req) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<>();
+        try {
+            int count = memberServiceImpl.checkId(map.get("memberId1").toString());
+
+            if (count > 0) {
+                resultMap.put("result", "fail");
+                resultMap.put("msg", "이미 존재하는 아이디입니다.");
+            } else {
+                resultMap.put("result", "success");
+                resultMap.put("msg", "사용하실 수 있는 아이디입니다.");
+            }
+        }catch (InsufficientStockException e){
+            resultMap.put("result", "fail");
+            resultMap.put("msg", e.getMessage());
+        }
+
+        return new Gson().toJson(resultMap);
+    }
+
+    @RequestMapping(value = "/emailCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String checkEmail(@RequestParam HashMap<String, Object> map, HttpServletRequest req) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        try {
+            int count = memberServiceImpl.checkEmail(map.get("email1").toString(), map.get("email2").toString());
+
+            if (count > 0) {
+                resultMap.put("result", "fail");
+                resultMap.put("msg", "이미 존재하는 이메일입니다.");
+            } else {
+                resultMap.put("result", "success");
+                resultMap.put("msg", "사용하실 수 있는 이메일입니다.");
+            }
+        }catch(InsufficientStockException e){
+            resultMap.put("result", "fail");
+            resultMap.put("msg", e.getMessage());
+        }
+
+        return new Gson().toJson(resultMap);
+
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest req){
