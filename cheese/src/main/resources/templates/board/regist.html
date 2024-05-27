@@ -2,9 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>글등록</title>
+    <style>
+        .btn.btn-primary {
+            font-weight: bold;
+            height: 50px;
+            border-radius: 3px;
+        }
+
+        button {
+            width: 150px;
+        }
+    </style>
 </head>
 <body>
+<div th:include="~{common/header.html}"></div>
+<div class="hero-wrap hero-bread" style="background-image: url('/images/main.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span>freeboard</span></p>
+                <h1 class="mb-0 bread">자유게시판</h1>
+            </div>
+        </div>
+    </div>
+</div>
 
+<main style="width: 800px;margin: 0 auto;margin-top: 100px;">
+    <form>
+        <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;">글쓰기</h1>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력해주세요.">
+        </div>
+        <input type="file" class="form-control" name="files" id="file" multiple>
+        <br>
+        <div>
+            <textarea id="summernote" name="bbs_content" placeholder="내용을 입력해주세요."></textarea>
+        </div>
+        <br>
+        <button class="btn btn-primary w-100 py-2" type="submit">등록</button>
+    </form>
+</main>
+
+<div th:include="~{common/footer.html}"></div>
+<link href="/../css/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/../js/summernote/summernote-lite.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 500,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['codeview', 'help']]
+        ]
+
+    });
+
+
+</script>
 </body>
 </html>

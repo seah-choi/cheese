@@ -2,9 +2,72 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>글 수정</title>
+    <style>
+        .btn.btn-primary {
+            font-weight: bold;
+            height: 50px;
+            border-radius: 3px;
+        }
+        button {
+            width: 150px;
+        }
+    </style>
 </head>
 <body>
+<div th:include="~{common/header.html}"></div>
+<div class="hero-wrap hero-bread" style="background-image: url('/images/main.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span>freeboard</span></p>
+                <h1 class="mb-0 bread">자유게시판</h1>
+            </div>
+        </div>
+    </div>
+</div>
 
+<main style="width: 800px;margin: 0 auto;margin-top: 100px;">
+    <form>
+        <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;">글 수정</h1>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="exampleFormControlInput1" value="">
+        </div>
+        <input type="file" class="form-control" name="files" id="file" multiple>
+        <br>
+        <div>
+            <textarea id="summernote" name="bbs_content"></textarea>
+        </div>
+        <br>
+        <div style="display: flex;justify-content: center;">
+            <button class="btn btn-primary py-2" onclick="location.href='freeboard.html'">목록</button>&nbsp;&nbsp;
+            <button class="btn btn-primary py-2 btn-outline-warning" type="button">수정</button>&nbsp;&nbsp;
+            <button class="btn btn-primary py-2" type="reset">취소</button>
+        </div>
+    </form>
+</main>
+
+<div th:include="~{common/footer.html}"></div>
+<link href="/../css/summernote/summernote-lite.css" rel="stylesheet">
+<script src="/../js/summernote/summernote-lite.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 500,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['codeview', 'help']]
+        ]
+
+    });
+
+
+</script>
 </body>
 </html>
