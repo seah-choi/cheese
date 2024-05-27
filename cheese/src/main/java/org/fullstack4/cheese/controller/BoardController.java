@@ -1,5 +1,6 @@
 package org.fullstack4.cheese.controller;
 
+import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -13,12 +14,10 @@ import org.fullstack4.cheese.service.BoardService;
 import org.fullstack4.cheese.service.BoardServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +88,46 @@ public class BoardController {
     }
 
     @GetMapping("/modify")
-    public void modifyGET(){
+    public void modifyGET(@RequestParam int bbsIdx, Model model){
+        BoardDTO boardDTO = boardService.view(bbsIdx);
+        model.addAttribute("boardDTO", boardDTO);
+    }
 
+    @PostMapping("/modify")
+    public String PostBbsModify(BoardDTO boardDTO, Model model,MultipartFile bbsFile1,HttpServletRequest req){
+        HttpSession session = req.getSession();
+        String directory= "D:\\cheese\\cheese\\src\\main\\resources\\static\\upload";
+        boardDTO.setUserId(session.getAttribute("user_id").toString());
+
+        boolean filedel = req.getParameter("fileDel") == null?false:true;
+
+
+        if (bbsFile1 != null && !bbsFile1.isEmpty()) {
+            Map<String, String> map = FileUtil.FileUpload(bbsFile1, directory);
+            boardDTO.setBbsFile(map.get("newName").toString());
+            boardDTO.setFileorgname(map.get("orgName").toString());
+        }else{
+            boardDTO.setBbsFile(req.getParameter("orgFileName"));
+            boardDTO.setFileorgname(req.getParameter("orgSaveFileName"));
+        }
+
+
+        int idx =boardService.modify(boardDTO);
+        log.info("idx:=" + idx);
+        if(idx == boardDTO.getBbsIdx()) {
+            return "redirect:/board/view?bbsIdx=" + idx;
+        }else{
+            return "redirect:/board/modify?bbsIdx="+boardDTO.getBbsIdx();
+        }
+    }
+
+    @RequestMapping(value = "/delete.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String bbsDelete(@RequestParam HashMap<String, Object> map) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<>();
+        int idx = Integer.parseInt(map.get("idx").toString());
+        boardService.delete(idx);
+
+        return new Gson().toJson(resultMap);
     }
 }

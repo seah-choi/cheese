@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,7 +83,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void delete(int bbsIdx) {
-
+        BoardEntity boardEntity = boardRepository.findById(bbsIdx).orElse(null);
+        boardRepository.delete(boardEntity);
     }
 
     @Override
@@ -92,7 +94,10 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public int modify(BoardDTO boardDTO) {
-        return 0;
+        BoardEntity boardEntity = modelMapper.map(boardDTO, BoardEntity.class);
+        boardEntity.setModify_date(LocalDateTime.now());
+        int idx = boardRepository.save(boardEntity).getBbsIdx();
+        return idx;
     }
 
     @Override

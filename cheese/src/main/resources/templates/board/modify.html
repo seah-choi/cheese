@@ -28,21 +28,33 @@
 </div>
 
 <main style="width: 800px;margin: 0 auto;margin-top: 100px;">
-    <form action="/bbs/modify" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-        <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;">글 수정</h1>
+    <form action="/board/modify" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;"><th:block th:if="${bbsCategoryCode} == bbs01">
+            중고상품 게시판
+        </th:block>
+            <th:block th:if="${bbsCategoryCode} == bbs02">
+                공지사항
+            </th:block>
+            <th:block th:if="${bbsCategoryCode} == bbs03">
+                자유게시판
+            </th:block> 글 수정</h1>
+        <input type="hidden" name="bbsIdx" th:value="${boardDTO.bbsIdx}">
+        <input type="hidden" name="bbsGood" th:value="${boardDTO.bbsGood}">
+        <input type="hidden" name="orgFileName" th:value="${boardDTO.bbsFile}">
+        <input type="hidden" name="orgSaveFileName" th:value="${boardDTO.fileorgname}">
+        <input type="hidden" name="bbsCategoryCode" th:value="${boardDTO.bbsCategoryCode}">
         <div class="mb-3">
-            <input type="text" class="form-control"  id="title" name="bbs_title" value="" placeholder="제목을 입력하세요">
+            <input type="text" class="form-control"  id="title" name="bbsTitle" th:value="${boardDTO.bbsTitle}" placeholder="제목을 입력하세요">
         </div>
-        <input type="file" class="form-control" id="image" name="bbs_file1" multiple>
+        <input type="file" class="form-control" id="image" name="bbsFile1" multiple>
         <br>
         <div>
-            <textarea id="summernote" name="bbs_content"></textarea>
+            <textarea id="summernote" name="bbsContent">[[${boardDTO.bbsContent}]]</textarea>
         </div>
         <br>
         <div style="display: flex;justify-content: center;">
-            <button class="btn btn-primary py-2" onclick="location.href='/board/list'">목록</button>&nbsp;&nbsp;
-            <button class="btn btn-primary py-2 btn-outline-warning" type="button">수정</button>&nbsp;&nbsp;
-            <button class="btn btn-primary py-2" type="reset">취소</button>
+            <button class="btn btn-primary py-2" th:onclick="|location.href='@{/board/list(bbsCategoryCode=${boardDTO.bbsCategoryCode})}'|">취소</button>&nbsp;&nbsp;
+            <button class="btn btn-primary py-2 btn-outline-warning" type="submit">수정</button>&nbsp;&nbsp;
         </div>
     </form>
 </main>
@@ -66,6 +78,23 @@
         ]
 
     });
+
+    function validateForm() {
+        // 제목과 내용이 비어 있는지 확인
+        var title = document.getElementById('title').value.trim();
+        var content = document.getElementById('content').value.trim();
+
+
+        if (title === '' || content === '') {
+            alert('제목과 내용을 입력해주세요.');
+            return false;
+        }
+
+
+        return true;
+    }
+
+
 
 
 </script>
