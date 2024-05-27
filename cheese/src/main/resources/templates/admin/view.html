@@ -129,15 +129,11 @@
 
             <!-- basic table  Start -->
             <div class="pd-20 card-box mb-30" style="margin-bottom: 30px">
-
                 <div id="list">
-
                     <h4 class="h4">공지사항 게시판</h4>
-
                     <hr>
                     <br>
-                    <form name="frm" >
-
+                    <form name="frm" action="/admin/delete" method="post">
                         <div id="list">
                             <div class="bottomLine">
                                 <h5 style="font-weight: bold">공지입니다.</h5>
@@ -159,17 +155,16 @@
 
                             <div class="topLine" style="display: flex;justify-content: center;">
                                 <div>
-                                    <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list?'">목록</button>
+                                    <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/list'">목록</button>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/board/modify?'">수정</button>
-                                    <button type="button" class="btn btn-secondary" id="btn_delete">삭제</button>
+                                    <button type="button" class="btn" id="btn_modify" onclick="location.href='/admin/modify'">수정</button>
+                                    <button type="submit" class="btn btn-secondary" id="btn_delete">삭제</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

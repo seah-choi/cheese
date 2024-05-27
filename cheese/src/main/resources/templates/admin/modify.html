@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>글 수정</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -96,13 +96,10 @@
             <div class="pd-20 card-box mb-30" style="margin-bottom: 30px">
 
                 <div id="list">
-
                     <h4 class="h4">공지사항 게시판</h4>
-
                     <hr>
                     <br>
-                    <form name="frmRegist" action="" method="post" enctype="multipart/form-data">
-
+                    <form name="frmRegist" action="/admin/modify" method="post" enctype="multipart/form-data">
                         <h6>제목</h6>
                         <div class="d-flex align-items-start align-items-sm-center mt-3 w-50">
                             <input class="form-control" name="bbs_title" type="text" placeholder="제목을 입력해주세요.">

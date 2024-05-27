@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>공지사항</title>
 </head>
 <body>
 <div class="main-container">
@@ -18,13 +18,10 @@
 
                 <br>
                 <div class="searchBox">
-                    <form role="search" id="frmSearch" class="searchForm" action="/admin/board/list" method="get">
+                    <form role="search" id="frmSearch" class="searchForm" action="/admin/list" method="get">
                         <input type="hidden" name="bbs_type" value="${bbsList.bbs_type}">
                         <div class="mb-3 row d-flex">
                             <label class="ml-3 col-form-label fontWe-700 mt-4">검색 범위</label>
-
-
-
                             <div class="select-wrap ">
                                 <div class="icon mt-4"></div>
                                 <select class="form-control" name="search_type" data-size="5" data-style="btn-outline-info" style="margin-left:40px">
@@ -53,17 +50,17 @@
                             </div>
                             <div class="col-sm-3">
                                 <button class="btn btn-warning" id="btnSearch" type="submit">검색</button>
-                                <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/admin/board/list?bbs_type='">초기화</button>
+                                <button class="btn btn-warning" id="btnReset" type="reset">초기화</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <br>
-                <form action="/admin/board/delete" method="get" id="deleteForm">
+                <form action="/admin/delete" method="post" id="deleteForm">
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th >
+                            <th>
                                 <div class="custom-control custom-checkbox mb-5">
                                     <input type="checkbox" class="custom-control-input" id="chkAll" name="chkAll">
                                     <label class="custom-control-label" for="chkAll"></label>
@@ -76,10 +73,7 @@
                             <th>조회수</th>
                         </tr>
                         </thead>
-
                         <tbody>
-
-
                         <tr>
                             <td>
                                 <div class="custom-control custom-checkbox mb-5">
@@ -93,13 +87,10 @@
                             <td>2024-05-21</td>
                             <td>12</td>
                         </tr>
-
-
                         </tbody>
-
                     </table>
                     <div class="d-flex justify-content-sm-end">
-                        <a class="btn btn-primary btn-lg btn-block" href="/admin/regist" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                        <a class="btn btn-primary btn-lg btn-block" href="/admin/regist" style="width: 100px; height: 40px; font-size: 15px;">작성하기</a>
                         <div class="d-flex justify-content-sm-end ml-2 mr-3">
                             <button type="button" id="btnDelete" name="btnDelete" class="btn btn-primary btn-lg btn-block" onclick="godelete();" style="width: 100px; height: 40px; font-size: 15px;">삭제하기</button>
                         </div>
@@ -112,7 +103,7 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item " >
-                                <a href="/admin/board/list?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
+                                <a href="/admin/list?page=${bbsList.page_block_start - bbsList.page_block_size}${bbsList.linkParams}"
                                    class="page-link" aria-label="Previous">&laquo;
                                 </a>
                             </li>
@@ -120,11 +111,11 @@
                                        end="${bbsList.page_block_end}"
                                        var="page_num">
                                 <li class="page-item ">
-                                    <a href="/admin/board/list?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
+                                    <a href="/admin/list?page=${page_num}${bbsList.linkParams}" class="page-link">${page_num}</a>
                                 </li>
                             </c:forEach>
                             <li class="page-item" >
-                                <a href="/admin/board/list?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
+                                <a href="/admin/list?page=${bbsList.page_block_start + bbsList.page_block_size}${bbsList.linkParams}" class="page-link" aria-label="Previous">
                                     &raquo;
                                 </a>
                             </li>
