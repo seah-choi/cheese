@@ -13,6 +13,6 @@ public interface BoardPagingSearch {
                              String search_keyword,
                              LocalDate Search_date1,
                              LocalDate Search_date2,
-                             String user_id);
+                             String bbsCategoryCode);
 
 }

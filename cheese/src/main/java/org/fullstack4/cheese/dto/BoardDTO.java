@@ -33,6 +33,6 @@ public class BoardDTO {
     private String response_name;
 
     private int categoryIdx;
-    private int bbsCategoryCode;
+    private String bbsCategoryCode;
     private String bbsCategoryName;
 }

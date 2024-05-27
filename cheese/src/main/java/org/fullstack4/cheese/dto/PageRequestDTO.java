@@ -62,7 +62,8 @@ public class PageRequestDTO {
     private LocalDate search_date1;
     private LocalDate search_date2;
     private String userId;
-
+    @Builder.Default
+    private String bbsCategoryCode ="bbs01";
     public void setTotal_count(int total_count) {
         this.total_count = total_count;
     }
@@ -101,6 +102,9 @@ public class PageRequestDTO {
             if(search_date1 != null && search_date2 !=null){
                 sb.append("&search_date1="+URLEncoder.encode(String.valueOf(search_date1)));
                 sb.append("&search_date2="+URLEncoder.encode(String.valueOf(search_date2)));
+            }
+            if(bbsCategoryCode != null && !bbsCategoryCode.isEmpty()){
+                sb.append("&BbsCategoryCode="+URLEncoder.encode(bbsCategoryCode));
             }
             linkParams = sb.toString();
         }

@@ -172,9 +172,9 @@
                         <a class="dropdown-item" href="/member/mypage">회원정보 수정</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="/board/list" class="nav-link">중고상품</a></li>
-                <li class="nav-item"><a href="/board/list" class="nav-link">공지사항</a></li>
-                <li class="nav-item active"><a href="/board/list" class="nav-link">자유게시판</a></li>
+                <li class="nav-item"><a href="/board/list?bbsCategoryCode=bbs01" class="nav-link">중고상품</a></li>
+                <li class="nav-item"><a href="/board/list?bbsCategoryCode=bbs02" class="nav-link">공지사항</a></li>
+                <li class="nav-item active"><a href="/board/list?bbsCategoryCode=bbs03" class="nav-link">자유게시판</a></li>
                 <th:block th:if="${session.user_id == null}">
                     <li class="nav-item"><a class="nav-link" href="/member/login">로그인</a></li>
                     <li class="nav-item"><a class="nav-link" href="/member/join">회원가입</a></li>

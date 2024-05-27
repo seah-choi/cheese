@@ -63,64 +63,29 @@
 <section class="ftco-section">
     <div class="container">
         <div class="searchBox">
-            <form action="/bbs/list" method="get" name="searchFrm">
-                <div class="row justify-content-center gubun">
-                    <div class="col-md-3 mb-5 text-center d-flex justify-content-center">
-                        <div class="col-md-6">
-                            <div class="form-group d-flex selectDiv">
-                                <div class="select-wrap ">
-                                    <div class="icon">구분</div>
-                                    <select class="form-control" name="search_type" data-size="5" data-style="btn-outline-info">
-                                        <option value="">전체</option>
-                                        <option>국어</option>
-                                        <option>영어</option>
-                                        <option>수학</option>
-                                        <option>과학</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group d-flex selectDiv">
-                                <div class="select-wrap">
-                                    <div class="icon">초중고</div>
-                                    <select id="schoolSelect" name="search_type" class="form-control school" data-size="5" data-style="btn-outline-info">
-                                        <option value="">전체</option>
-                                        <option value="elementary">초등</option>
-                                        <option value="middle">중등</option>
-                                        <option value="high">고등</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group d-flex selectDiv">
-                                <div class="select-wrap">
-                                    <div class="icon">학년</div>
-                                    <select id="gradeSelect" name="search_type" class="form-control grade" data-size="5" data-style="btn-outline-info">
-                                        <option value="">전체</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+            <form action="/board/list" method="get" name="searchFrm">
+                <input type="hidden" name="bbsCategoryCode" th:value="${responseDTO.bbsCategoryCode}">
+                <div class="col-md-6">
+                    <!-- 기간 검색 조건 -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">기간</span>
+                        <input type="date" class="form-control" name="search_date1" placeholder="시작일" aria-label="시작일">
+                        <span class="input-group-text">-</span>
+                        <input type="date" class="form-control" name="search_date2" placeholder="종료일" aria-label="종료일">
                     </div>
                 </div>
-
-                <div class="mb-3 row justify-content-center">
-                    <label class="ml-3 mt-2 col-form-label fontWe-700">검색 기간</label>
-                    <div class="col-2">
-                        <input type="date" class="form-control" name="search_date1" id="search_date1" value="">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">구분</span>
+                        <select class="form-control" name="search_type">
+                            <option value="t">제목</option>
+                            <option value="c">내용</option>
+                        </select>
+                        <span class="input-group-text">검색어</span>
+                        <input type="text" class="form-control" name="search_word">
                     </div>
-                    <div class="mt-2">
-                        <span class="justify-content-center">~</span>
-                    </div>
-                    <div class="col-2">
-                        <input type="date" class="form-control " name="search_date2" id="search_date2" value="">
-                    </div>
-                    <div class="col-sm-2 btns d-flex">
-                        <button class="btn btn-warning mr-2" id="btnSearch" type="submit">검색</button>
-                        <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href='/board/list'">초기화</button>
-                    </div>
+                    <button class="btn btn-warning mr-2" id="btnSearch" type="submit">검색</button>
+                    <button class="btn btn-warning" id="btnReset" type="reset" onclick="location.href=`/board/list`">초기화</button>
                 </div>
             </form>
         </div>
@@ -139,13 +104,18 @@
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="/board/view">판매합니다</a></td>
-                        <td>test1</td>
-                        <td>2024-05-24</td>
-                        <td>12</td>
-                    </tr>
+                        <th:block th:each="list, iterStat : ${responseDTO.dtolist}">
+                            <th:block th:with="totalcount=${responseDTO.total_count - iterStat.count - responseDTO.page_skip_count+1}">
+                                <tr>
+                                    <th scope="row">[[${totalcount}]]</th>
+                                    <td><a class = "text-dark" th:href="'/board/view?bbsIdx='+${list.bbsIdx}"><p th:text="${list.bbsTitle}"></p></a></td>
+                                    <td th:text="${list.userId}"></td>
+                                    <td th:text="${list.regDate}"></td>
+                                    <td th:text="${list.bbsGood}"></td>
+                                </tr>
+                            </th:block>
+                        </th:block>
+
                     </tbody>
 
                 </table>
@@ -156,7 +126,7 @@
         </div>
 
 
-       <!-- <nav aria-label="Page navigation example">
+       <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <th:block th:if="${responseDTO.prev_page_plag == false}">
                     <li class="page-item disabled">
@@ -187,7 +157,7 @@
                 </a>
                 </li>
             </ul>
-        </nav>-->
+        </nav>
     </div>
 </section>
 

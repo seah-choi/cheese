@@ -27,6 +27,7 @@ public class PageResponseDTO<E> {
     private String linkParams;
     private String sort_type;
     private String userId;
+    private String bbsCategoryCode;
 
     List<E> dtolist;
 
@@ -52,6 +53,8 @@ public class PageResponseDTO<E> {
         this.search_word = pageRequestDTO.getSearch_word();
         this.linkParams = pageRequestDTO.getLinkParams();
         this.sort_type = pageRequestDTO.getSort_type();
+        this.userId = pageRequestDTO.getUserId();
+        this.bbsCategoryCode = pageRequestDTO.getBbsCategoryCode();
 
         log.info("pageRequestDTO : {}", pageRequestDTO);
         log.info("dtoList : {}", dtoList);

@@ -21,7 +21,7 @@ public class BoardPagingSearchImpl extends QuerydslRepositorySupport implements 
     }
 
     @Override
-    public Page<BoardEntity> search(Pageable pageable, String types[], String search_keyword, LocalDate Search_date1, LocalDate Search_date2,String user_id) {
+    public Page<BoardEntity> search(Pageable pageable, String types[], String search_keyword, LocalDate Search_date1, LocalDate Search_date2,String bbsCategoryCode) {
         log.info("==============================");
         log.info("BoardSearchImpl >> search START");
         log.info("Search_date1 = " + Search_date1);
@@ -45,8 +45,8 @@ public class BoardPagingSearchImpl extends QuerydslRepositorySupport implements 
         if(Search_date1 !=null && Search_date2 != null){
             booleanBuilder.or(qBoard.regDate.between(Search_date1.atStartOfDay(), Search_date2.atStartOfDay()));
         }
+        query.where(qBoard.bbsCategoryCode.eq(bbsCategoryCode));
         query.where(booleanBuilder);
-        query.where(qBoard.userId.eq(user_id));
         query.where(qBoard.bbsIdx.gt(0));
 
 
