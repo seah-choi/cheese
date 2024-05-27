@@ -26,6 +26,7 @@ public class BoardDTO {
     private String bbsTag;
     private String bbsPart;
     private int bbsGood;
+    private int bbsReadCnt;
 
     private String requestId;
     private String request_name;

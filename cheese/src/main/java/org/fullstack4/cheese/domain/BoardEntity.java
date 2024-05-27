@@ -28,6 +28,8 @@ public class BoardEntity extends BaseEntity {
     private String bbsFile;
     @Column(name="bbs_good", nullable = true)
     private int bbsGood;
+    @Column(name="bbs_read_cnt", nullable = true)
+    private int bbsReadCnt;
     @Column(name="bbs_category_code", nullable = true)
     private String bbsCategoryCode;
     private String fileorgname;
