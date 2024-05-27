@@ -167,17 +167,21 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">마이페이지</a>
+                    <a class="nav-link dropdown-toggle" href="/member/mypage" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">마이페이지</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="shop.html">회원정보 수정</a>
-                        <a class="dropdown-item" href="wishlist.html"></a>
-                        <a class="dropdown-item" href="product-single.html"></a>
+                        <a class="dropdown-item" href="/member/mypage">회원정보 수정</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="about.html" class="nav-link">중고상품</a></li>
-                <li class="nav-item"><a href="blog.html" class="nav-link">공지사항</a></li>
+                <li class="nav-item"><a href="/board/list" class="nav-link">중고상품</a></li>
+                <li class="nav-item"><a href="/board/list" class="nav-link">공지사항</a></li>
                 <li class="nav-item active"><a href="/board/list" class="nav-link">자유게시판</a></li>
-                <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                <th:block th:if="${session.user_id == null}">
+                    <li class="nav-item"><a class="nav-link" href="/member/login">로그인</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/member/join">회원가입</a></li>
+                </th:block>
+                <th:block th:if="${session.user_id != null}">
+                    <li class="nav-item"><a class="nav-link" href="/member/logout">로그아웃</a></li>
+                </th:block>
 
             </ul>
         </div>

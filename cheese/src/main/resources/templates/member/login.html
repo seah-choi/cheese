@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>회원 가입</title>
     <style>
         .btn.btn-primary {
             font-weight: bold;
@@ -13,6 +13,7 @@
             height: 50px;
             border-radius: 3px;
     </style>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 <div th:include="~{common/header.html}"></div>
@@ -28,25 +29,91 @@
 </div>
 
 <main style=" width: 500px !important;margin: 0 auto !important;margin-top: 100px !important;">
-    <form>
-        <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;">로그인</h1>
-        <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="아이디">
+    <form class="row login_form mb-5" method="post" action="/member/login.dox" name="frmLogin" >
+        <input type="hidden" name="acc_url" value="/">
+        <div class="col-md-8 mb-4">
+            <input type="text" class="form-control" id="member_id" name="user_id" data-name="아이디" placeholder="아이디" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디'" th:value="${saveid}">
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호">
+        <div class="col-md-4">
+            <button type="button" id="loginbtn" style="height:170%;width:100%" class="btn btn-outline-success" onclick="login()">로그인 </button>
         </div>
+        <div class="col-md-8 mb-4">
+            <input type="password" class="form-control" id="pwd" data-name="비밀번호" name="pwd" placeholder="비밀번호" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호'">
+        </div>
+        <div id="err_login" class="text-danger text-center col-md-12">
 
-        <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                아이디 저장
-            </label>
         </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">로그인</button>
+        <div class="col-md-6 form-group">
+            <div class="creat_account">
+                <input type="checkbox" id="save_id" name="save_id" th:checked="${saveid != ''}">
+                <label for="save_id">아이디 저장</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button type="button" id="findpwdbtn" style="width:100%" class="btn btn-outline-secondary" onclick="location.href='findpwd'">비밀번호 찾기 </button>
+        </div>
     </form>
 </main>
 
 <div th:include="~{common/footer.html}"></div>
+
+<script>
+    var memberId = document.getElementById("member_id");
+    var password = document.getElementById("pwd");
+    memberId.addEventListener("input", function(event) {
+        var inputValue = event.target.value;
+        var regex = /^[a-z0-9]+$/;
+
+        if (!regex.test(inputValue)) {
+            if (inputValue === '' || event.data === null) {
+                return;
+            }
+            event.preventDefault();
+            alert("영어 소문자 및 숫자만 입력 가능합니다.");
+            event.target.value = inputValue.replace(/[^a-z0-9]/g, '');
+            return false;
+        }
+    });
+    password.addEventListener("input", function(event) {
+        var inputValue = event.target.value;
+        var regex = /^[a-zA-Z0-9!@#$%^&*()\-_=+[\]{};:'",.<>/?]+$/;
+
+        if (!regex.test(inputValue)) {
+            if (inputValue === '' || event.data === null) {
+                return;
+            }
+            event.preventDefault();
+            alert("영어+숫자+특수문자만 입력 가능합니다.");
+            event.target.value = inputValue.replace(/[^a-z0-9]/g, '');
+            return false;
+        }
+    });
+    function login() {
+        let frmData = $("form[name=frmLogin]").serialize();
+        frmData = decodeURIComponent(frmData);
+        $.ajax({
+            url:"/member/login.dox?"+frmData,
+            dataType:"json",
+            type : "POST",
+            data : {
+
+            },
+            success : function(data) {
+                if(data.result == "success") {
+                    alert(data.msg);
+                    location.replace("/");
+                }else if(data.result =="false"){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            fail : function (data){
+
+            }
+
+        });
+    }
+</script>
 </body>
 </html>
