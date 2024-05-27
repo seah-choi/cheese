@@ -24,4 +24,6 @@ public interface BoardService {
     void removeGood(String id, int bbsIdx);
     List<BoardDTO> shareList(int bbsIdx);
     List<BoardDTO> todayList(String userId, LocalDate date);
+    List<BoardDTO> mainReadCntList();
+    List<BoardDTO> mainGoodList();
 }

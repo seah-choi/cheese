@@ -137,4 +137,22 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardDTO> todayList(String userId, LocalDate date) {
         return List.of();
     }
+
+    @Override
+    public List<BoardDTO> mainReadCntList() {
+        List<BoardEntity> entityList = boardRepository.findAllByOrderByBbsReadCntDesc();
+        List<BoardDTO> dtoList = entityList.stream().map(vo-> modelMapper.map(vo, BoardDTO.class))
+                .limit(5)
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
+    @Override
+    public List<BoardDTO> mainGoodList() {
+        List<BoardEntity> entityList = boardRepository.findAllByOrderByBbsGoodDesc();
+        List<BoardDTO> dtoList = entityList.stream().map(vo-> modelMapper.map(vo, BoardDTO.class))
+                .limit(5)
+                .collect(Collectors.toList());
+        return dtoList;
+    }
 }
