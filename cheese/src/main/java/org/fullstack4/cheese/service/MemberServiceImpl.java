@@ -80,19 +80,30 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
     public void join(MemberDTO memberDTO) throws InsufficientStockException {
-        if(memberDTO.getUserId() == null || memberDTO.getUserId().trim().equals("")){
+      /*  if(memberDTO.getUserId() == null || memberDTO.getUserId().trim().equals("")){
             throw new InsufficientStockException("아이디를 입력해주세요.");
         }
         if(memberDTO.getUserPwd() == null || memberDTO.getUserPwd().trim().equals("")){
             throw new InsufficientStockException("비밀번호를 입력해주세요.");
-        }
+        }*/
         MemberEntity memberEntity = modelMapper.map(memberDTO, MemberEntity.class);
         memberRepository.save(memberEntity);
     }
 
     @Override
     public void modify(MemberDTO memberDTO) {
-
+        int idx = memberRepository.findByUserId(memberDTO.getUserId()).getUserIdx();
+        String orgpwd = memberRepository.findById(idx).get().getUserPwd();
+        String pwd = memberDTO.getUserPwd();
+        memberDTO.setUserIdx(idx);
+        if(pwd != null && !pwd.equals("")){
+            memberDTO.setUserPwd(pwd);
+        }else{
+            memberDTO.setUserPwd(orgpwd);
+        }
+        MemberEntity memberEntity = modelMapper.map(memberDTO, MemberEntity.class);
+        memberEntity.setModify_date(LocalDateTime.now());
+        memberRepository.save(memberEntity);
     }
 
     @Override
@@ -117,7 +128,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDTO view(String id) {
-        return null;
+        MemberEntity entity = memberRepository.findByUserId(id);
+        MemberDTO memberDTO = modelMapper.map(entity, MemberDTO.class);
+
+        return memberDTO;
     }
 
     @Override

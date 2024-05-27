@@ -30,7 +30,7 @@ import java.util.HashMap;
 @RequestMapping("/member")
 public class MemberController {
 
-    private final MemberService memberServiceImpl;
+    private final MemberService memberService;
     @GetMapping("/join")
     public void joinGET(){
 
@@ -43,8 +43,9 @@ public class MemberController {
 
     @PostMapping("/join")
     public String Postjoin(MemberDTO memberDTO){
+        log.info("memberDTO : " , memberDTO);
         try {
-            memberServiceImpl.join(memberDTO);
+            memberService.join(memberDTO);
             return "redirect:/member/login";
         }catch(Exception e){
             return e.getMessage();
@@ -61,7 +62,7 @@ public class MemberController {
         String pwd = req.getParameter("pwd").trim();
         boolean save_id = req.getParameter("save_id") ==null?false:true;
         try {
-            if (memberServiceImpl.login(id, pwd, req)) {
+            if (memberService.login(id, pwd, req)) {
                 if(save_id){
                     CookieUtil.setCookies(resp,"","",50000,"user_id",id);
                 }else{
@@ -85,7 +86,7 @@ public class MemberController {
     public String checkId(@RequestParam HashMap<String, Object> map, HttpServletRequest req) throws Exception{
         HashMap<String, Object> resultMap = new HashMap<>();
         try {
-            int count = memberServiceImpl.checkId(map.get("memberId1").toString());
+            int count = memberService.checkId(map.get("memberId1").toString());
 
             if (count > 0) {
                 resultMap.put("result", "fail");
@@ -108,7 +109,7 @@ public class MemberController {
         HashMap<String, Object> resultMap = new HashMap<>();
 
         try {
-            int count = memberServiceImpl.checkEmail(map.get("email1").toString(), map.get("email2").toString());
+            int count = memberService.checkEmail(map.get("email1").toString(), map.get("email2").toString());
 
             if (count > 0) {
                 resultMap.put("result", "fail");
@@ -137,12 +138,26 @@ public class MemberController {
     }
 
     @GetMapping("/modify")
-    public void modifyGET(){
+    public void modifyGET(HttpServletRequest req,
+                          Model model){
+
+        HttpSession session = req.getSession();
+        String userId = session.getAttribute("user_id").toString();
+
+        MemberDTO memberDTO = memberService.view(userId);
+
+        log.info("memberDTO : {}", memberDTO);
+
+        model.addAttribute("dto", memberDTO);
 
     }
 
-    @GetMapping("/mypage")
-    public void mypageGET(){
+    @PostMapping("/modify")
+    public String modifyPOST(HttpServletRequest req, MemberDTO memberDTO, ServletResponse response){
+        HttpSession session = req.getSession();
+        memberService.modify(memberDTO);
 
+        session.invalidate();
+        return "redirect:/member/login";
     }
 }
