@@ -22,22 +22,31 @@
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
                 <p class="breadcrumbs"><span>freeboard</span></p>
-                <h1 class="mb-0 bread">자유게시판</h1>
             </div>
         </div>
     </div>
 </div>
 
 <main style="width: 800px;margin: 0 auto;margin-top: 100px;">
-    <form>
-        <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;">글쓰기</h1>
+
+    <form action="/board/regist" method="post" enctype="multipart/form-data">
+        <h1 class="h3 mb-3 fw-normal" style="text-align: center;font-weight: bold;"><th:block th:if="${bbsCategoryCode} == bbs01">
+            중고상품 게시판
+        </th:block>
+            <th:block th:if="${bbsCategoryCode} == bbs02">
+                공지사항
+            </th:block>
+            <th:block th:if="${bbsCategoryCode} == bbs03">
+                자유게시판
+            </th:block> 글쓰기</h1>
+        <input type="hidden" name="bbsCategoryCode" th:value="${bbsCategoryCode}">
         <div class="mb-3">
-            <input type="text" class="form-control"  id="title" name="bbs_title" placeholder="제목을 입력해주세요.">
+            <input type="text" class="form-control"  id="title" name="bbsTitle" placeholder="제목을 입력해주세요.">
         </div>
-        <input type="file" class="form-control" id="image" name="bbs_file1" multiple>
+        <input type="file" class="form-control" id="image" name="bbsFile1" multiple>
         <br>
         <div>
-            <textarea id="summernote" name="bbs_content"  placeholder="내용을 입력해주세요."></textarea>
+            <textarea id="summernote" name="bbsContent"  placeholder="내용을 입력해주세요."></textarea>
         </div>
         <br>
         <div class="d-flex justify-content-center">

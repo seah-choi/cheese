@@ -97,7 +97,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public int regist(BoardDTO boardDTO) {
-        return 0;
+        BoardEntity boardEntity = modelMapper.map(boardDTO, BoardEntity.class);
+        int idx = boardRepository.save(boardEntity).getBbsIdx();
+        return idx;
     }
 
     @Override

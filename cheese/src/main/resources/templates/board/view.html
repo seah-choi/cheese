@@ -143,20 +143,20 @@
 
                 <form  action="/bbs/regist" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" >
                     <div id="list">
-                        <th:block th:if="${bbsCategoryCode} == 'bbs01'">
+                        <th:block th:if="${boardDTO.bbsCategoryCode} == bbs01 ">
                             <h4 class="h4">중고상품 게시판</h4>
                         </th:block>
-                        <th:block th:if="${bbsCategoryCode} =='bbs02'">
+                        <th:block th:if="${boardDTO.bbsCategoryCode} == bbs02">
                             <h4 class="h4">공지사항</h4>
                         </th:block>
-                        <th:block th:if="${bbsCategoryCode} =='bbs03'">
+                        <th:block th:if="${boardDTO.bbsCategoryCode} == bbs03">
                             <h4 class="h4">자유게시판</h4>
                         </th:block>
                         <div class="bottomLine">
-                            <h5 style="font-weight: bold">[[${bbsTitle}]]</h5>
+                            <h5 style="font-weight: bold">[[${boardDTO.bbsTitle}]]</h5>
                             <div id="se" class="mt-3">
                                 <div>
-                                    <span>test1</span><span id="date">[[${regDate}]]</span>
+                                    <span>test1</span><span id="date">[[${boardDTO.regDate}]]</span>
                                 </div>
                                 <div>
                                     <span style="font-weight: bold">조회수</span><span id="count">0</span>
@@ -165,15 +165,15 @@
                         </div>
 
                         <div class="align-items-start align-items-sm-center mt-3" style="white-space: pre-wrap;">
-                            [[${bbsContent}]]
+                            [[${boardDTO.bbsContent}]]
                         </div>
                         <br><br>
-                        <c:if test="${not empty file}">
+                        <th:block th:if="${boardDTO.fileorgname} != null">
                             <div class="d-flex topLine pt-4">
-                                <a download href="/resources/upload/bbs/${file.saveFile}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>파일 다운로드</a>
-                                <div class="px-4 py-2 mb-4">${file.saveFile}</div>
+                                <a download th:href="'/upload/'+${boardDTO.bbsFile}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="me-2 text-primary"></i>파일 다운로드</a>
+                                <div class="px-4 py-2 mb-4">[[${boardDTO.fileorgname}]]</div>
                             </div>
-                        </c:if>
+                        </th:block>
 
 
 

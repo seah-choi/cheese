@@ -20,7 +20,7 @@ public class BoardEntity extends BaseEntity {
 
     @Column(name= "bbs_title" ,length = 20, nullable = false)
     private String bbsTitle;
-    @Column(name= "bbs_contnet" ,length = 20, nullable = false)
+    @Column(name= "bbs_content" ,length = 20, nullable = false)
     private String bbsContent;
     @Column(name= "user_id" ,length = 20, nullable = false)
     private String userId;
