@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>글 등록</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -101,7 +101,7 @@
 
                     <hr>
                     <br>
-                    <form name="frmRegist" action="" method="post" enctype="multipart/form-data">
+                    <form name="frmRegist" action="/admin/regist" method="post" enctype="multipart/form-data">
 
                         <h6>제목</h6>
                         <div class="d-flex align-items-start align-items-sm-center mt-3 w-50">
@@ -116,7 +116,7 @@
                         </div>
                         <div style="display: flex;justify-content: center; margin-top: 50px">
                             <div>
-                                <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/board/list?'">목록</button>
+                                <button type="button" class="btn" id="btn_back" onclick="location.href='/admin/list'">목록</button>
                             </div>
                             <div>
                                 <button type="submit" class="btn" id="btn_regist">등록</button>
