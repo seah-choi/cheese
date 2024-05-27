@@ -41,6 +41,16 @@ public class MemberController {
 
     }
 
+    @PostMapping("/join")
+    public String Postjoin(MemberDTO memberDTO){
+        try {
+            memberServiceImpl.join(memberDTO);
+            return "redirect:/member/login";
+        }catch(Exception e){
+            return e.getMessage();
+        }
+    }
+
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String Login(@RequestParam HashMap<String, Object> map, HttpServletRequest req,HttpServletResponse resp) throws Exception{

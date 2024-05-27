@@ -78,8 +78,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional(rollbackFor = {InsufficientStockException.class, Exception.class})
     public void join(MemberDTO memberDTO) throws InsufficientStockException {
-
+        if(memberDTO.getUserId() == null || memberDTO.getUserId().trim().equals("")){
+            throw new InsufficientStockException("아이디를 입력해주세요.");
+        }
+        if(memberDTO.getUserPwd() == null || memberDTO.getUserPwd().trim().equals("")){
+            throw new InsufficientStockException("비밀번호를 입력해주세요.");
+        }
+        MemberEntity memberEntity = modelMapper.map(memberDTO, MemberEntity.class);
+        memberRepository.save(memberEntity);
     }
 
     @Override
