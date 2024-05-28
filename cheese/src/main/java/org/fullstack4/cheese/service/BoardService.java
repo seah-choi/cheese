@@ -23,4 +23,5 @@ public interface BoardService {
     List<BoardDTO> mainReadCntList();
     List<BoardDTO> mainGoodList();
     List<BoardDTO> mainBoardList(String bbs_category_code);
+
 }

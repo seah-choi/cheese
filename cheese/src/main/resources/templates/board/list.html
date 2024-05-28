@@ -44,8 +44,9 @@
         div.tableDiv {
             margin-top: 50px;
         }
-    </style>
 
+    </style>
+    <link rel="stylesheet" href="/css/pagination.css">
 </head>
 <body>
 <div th:include="~{common/header.html}"></div>
@@ -121,13 +122,11 @@
                                     <td><a class = "text-dark" th:href="'/board/view?bbsIdx='+${list.bbsIdx}"><p th:text="${list.bbsTitle}"></p></a></td>
                                     <td th:text="${list.userId}"></td>
                                     <td th:text="${list.regDate}"></td>
-                                    <td th:text="${list.bbsGood}"></td>
+                                    <td th:text="${list.bbsReadCnt}"></td>
                                 </tr>
                             </th:block>
                         </th:block>
-
                     </tbody>
-
                 </table>
                 <th:block th:if="${responseDTO.bbsCategoryCode == 'bbs01' && session.user_id != null}">
                     <div class="d-flex justify-content-sm-end">

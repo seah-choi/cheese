@@ -67,4 +67,10 @@ public class BoardReplyServiceImpl implements  BoardReplyService {
     public void delete(int reply_idx) {
         boardReplyRepository.deleteById(reply_idx);
     }
+
+    @Override
+    public int replyCnt(int bbs_idx) {
+        int replyCnt = boardReplyRepository.countAllByBbsIdx(bbs_idx);
+        return replyCnt;
+    }
 }

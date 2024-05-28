@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface BoardReplyRepository extends JpaRepository<BoardReplyEntity, Integer>, BoardReplyPaging {
     List<BoardReplyEntity> findByBbsIdx(int bbs_idx);
+    int countAllByBbsIdx(int bbs_idx);
 }

@@ -52,12 +52,18 @@ public class BoardController {
         BoardDTO boardDTO = boardService.view(bbsIdx);
         boolean goodcheck = boardService.viewGood(bbsIdx,id);
 
+        int replyCnt = boardReplyService.replyCnt(bbsIdx);
+
+
+
+
         PageResponseDTO<BoardReplyDTO> responseDTO = boardReplyService.replyListByPage(pageRequestDTO,bbsIdx);
 
         log.info("responseDTO : {}", responseDTO);
         log.info("goodcheck : {}", goodcheck);
-        log.info("boardDTO:{}",boardDTO.toString());
+        log.info("boardDTO:{}", boardDTO.toString());
 
+        model.addAttribute("replyCnt", replyCnt);
         model.addAttribute("responseDTO", responseDTO);
         model.addAttribute("boardDTO", boardDTO);
         model.addAttribute("goodcheck", goodcheck);

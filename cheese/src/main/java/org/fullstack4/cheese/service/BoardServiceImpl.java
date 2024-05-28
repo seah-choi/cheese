@@ -72,7 +72,12 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO view(int bbsIdx) {
         BoardEntity boardEntity = boardRepository.findById(bbsIdx).orElse(null);
         BoardDTO boardDTO = modelMapper.map(boardEntity, BoardDTO.class);
+        int readcnt = boardEntity.getBbsReadCnt()+1;
+        boardDTO.setBbsReadCnt(readcnt);
 
+        BoardEntity boardEntity1 = modelMapper.map(boardDTO, BoardEntity.class);
+        boardRepository.save(boardEntity1);
+        log.info("boardEntity1 : {} ", boardEntity1);
         log.info("boardDTO : {}", boardDTO.toString());
         return boardDTO;
     }

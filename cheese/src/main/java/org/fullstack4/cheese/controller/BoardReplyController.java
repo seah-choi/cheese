@@ -24,6 +24,7 @@ public class BoardReplyController {
         log.info(replyDTO);
         int result = boardReplyService.regist(replyDTO);
 
+
         return "redirect:/board/view?bbsIdx=" + replyDTO.getBbsIdx();
     }
 

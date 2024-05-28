@@ -10,5 +10,6 @@ public interface BoardReplyService {
     int modify(BoardReplyDTO boardreplyDTO);
     int regist(BoardReplyDTO boardreplyDTO);
     void delete(int reply_idx);
+    int replyCnt(int bbs_idx);
 
 }

@@ -10,4 +10,6 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer>, Bo
     List<BoardEntity> findAllByOrderByBbsGoodDesc();
     List<BoardEntity> findAllByOrderByBbsReadCntDesc();
     List<BoardEntity> findAllByBbsCategoryCode(String bbs_category_code);
+    
+
 }
