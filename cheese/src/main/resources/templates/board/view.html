@@ -140,7 +140,7 @@
                             <h5 style="font-weight: bold">[[${boardDTO.bbsTitle}]]</h5>
                             <div id="se" class="mt-3">
                                 <div>
-                                    <span>[[${boardDTO.userId}]]</span><span id="date">[[${boardDTO.regDate}]]</span>
+                                    <span>[[${boardDTO.userId}]]</span><span id="date" th:text="${#strings.substring(boardDTO.regDate, 0, 10)}"></span>
                                 </div>
                                 <div>
                                     <span style="font-weight: bold">조회수</span><span id="count">[[${boardDTO.bbsReadCnt}]]</span>
@@ -190,7 +190,7 @@
                                 </th:block>
                                 <div>
                                     <th:block th:each="list : ${responseDTO.dtolist}">
-                                        <span style="font-weight: bold">[[${list.userId}]]</span>&nbsp;<span>[[${list.regDate}]]</span>
+                                        <span style="font-weight: bold">[[${list.userId}]]</span>&nbsp;<span th:text="${#strings.substring(list.regDate, 0, 10)}"></span>
                                         <br>
                                         <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
                                             <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" th:value="${list.replyContent}" id="reply_content" readonly></p>

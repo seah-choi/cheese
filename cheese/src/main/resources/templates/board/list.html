@@ -121,7 +121,7 @@
                                     <th scope="row">[[${totalcount}]]</th>
                                     <td><a class = "text-dark" th:href="'/board/view?bbsIdx='+${list.bbsIdx}"><p th:text="${list.bbsTitle}"></p></a></td>
                                     <td th:text="${list.userId}"></td>
-                                    <td th:text="${list.regDate}"></td>
+                                    <td th:text="${#strings.length(list.regDate) > 10 ? #strings.substring(list.regDate, 0, 10) : list.regDate}"></td>
                                     <td th:text="${list.bbsReadCnt}"></td>
                                 </tr>
                             </th:block>
