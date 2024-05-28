@@ -67,10 +67,6 @@ public class BoardServiceImpl implements BoardService {
         return responseDTO;
     }
 
-    @Override
-    public PageResponseDTO<BoardDTO> shareBbsListByPage(PageRequestDTO pageRequestDTO) {
-        return null;
-    }
 
     @Override
     public BoardDTO view(int bbsIdx) {
@@ -87,10 +83,6 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.delete(boardEntity);
     }
 
-    @Override
-    public void shareDelete(int idx) {
-
-    }
 
     @Override
     public int modify(BoardDTO boardDTO) {
@@ -133,15 +125,6 @@ public class BoardServiceImpl implements BoardService {
 
     }
 
-    @Override
-    public List<BoardDTO> shareList(int bbsIdx) {
-        return List.of();
-    }
-
-    @Override
-    public List<BoardDTO> todayList(String userId, LocalDate date) {
-        return List.of();
-    }
 
     @Override
     public List<BoardDTO> mainReadCntList() {

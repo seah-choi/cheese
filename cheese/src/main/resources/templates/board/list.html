@@ -129,9 +129,21 @@
                     </tbody>
 
                 </table>
+                <th:block th:if="${responseDTO.bbsCategoryCode == 'bbs01' && session.user_id != null}">
+                    <div class="d-flex justify-content-sm-end">
+                        <a class="btn btn-primary btn-lg btn-block" th:href="'/board/regist?bbsCategoryCode='+${responseDTO.bbsCategoryCode}" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                    </div>
+                </th:block>
+                <th:block th:if="${responseDTO.bbsCategoryCode == 'bbs02' && session.user_type == 'admin'}">
                 <div class="d-flex justify-content-sm-end">
                     <a class="btn btn-primary btn-lg btn-block" th:href="'/board/regist?bbsCategoryCode='+${responseDTO.bbsCategoryCode}" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
                 </div>
+                </th:block>
+                <th:block th:if="${responseDTO.bbsCategoryCode == 'bbs03' && session.user_id != null}">
+                    <div class="d-flex justify-content-sm-end">
+                        <a class="btn btn-primary btn-lg btn-block" th:href="'/board/regist?bbsCategoryCode='+${responseDTO.bbsCategoryCode}" style="width: 100px; height: 40px; font-size: 15px;" >작성하기</a>
+                    </div>
+                </th:block>
             </form>
         </div>
 

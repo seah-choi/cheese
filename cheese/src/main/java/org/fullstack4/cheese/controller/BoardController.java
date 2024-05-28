@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.cheese.common.FileUtil;
 import org.fullstack4.cheese.dto.BoardDTO;
+import org.fullstack4.cheese.dto.BoardReplyDTO;
 import org.fullstack4.cheese.dto.PageRequestDTO;
 import org.fullstack4.cheese.dto.PageResponseDTO;
+import org.fullstack4.cheese.service.BoardReplyService;
 import org.fullstack4.cheese.service.BoardService;
 import org.fullstack4.cheese.service.BoardServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,7 @@ import java.util.Map;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
+    private final BoardReplyService boardReplyService;
 
     @GetMapping("/list")
     public void listGET(@Valid PageRequestDTO pageRequestDTO, Model model, HttpServletRequest request){
@@ -42,13 +45,20 @@ public class BoardController {
     }
 
     @GetMapping("/view")
-    public void viewGET(@RequestParam int bbsIdx, Model model,HttpServletRequest req){
+    public void viewGET(@RequestParam int bbsIdx, Model model,HttpServletRequest req,PageRequestDTO pageRequestDTO){
         HttpSession session = req.getSession();
         String id = session.getAttribute("user_id") == null? "":session.getAttribute("user_id").toString();
+
         BoardDTO boardDTO = boardService.view(bbsIdx);
         boolean goodcheck = boardService.viewGood(bbsIdx,id);
+
+        PageResponseDTO<BoardReplyDTO> responseDTO = boardReplyService.replyListByPage(pageRequestDTO,bbsIdx);
+
+        log.info("responseDTO : {}", responseDTO);
         log.info("goodcheck : {}", goodcheck);
         log.info("boardDTO:{}",boardDTO.toString());
+
+        model.addAttribute("responseDTO", responseDTO);
         model.addAttribute("boardDTO", boardDTO);
         model.addAttribute("goodcheck", goodcheck);
     }
@@ -127,6 +137,34 @@ public class BoardController {
         HashMap<String, Object> resultMap = new HashMap<>();
         int idx = Integer.parseInt(map.get("idx").toString());
         boardService.delete(idx);
+
+        return new Gson().toJson(resultMap);
+    }
+
+    @RequestMapping(value = "/replyregist.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String replyRegist(@RequestParam HashMap<String, Object> map,HttpServletRequest req) throws Exception{
+        HashMap<String, Object> resultMap = new HashMap<>();
+        HttpSession session = req.getSession();
+
+        String replyContent = req.getParameter("replyContent");
+        String user_id = session.getAttribute("user_id").toString();
+        int bbs_idx = Integer.parseInt(req.getParameter("bbsIdx"));
+
+
+        BoardReplyDTO boardReplyDTO = BoardReplyDTO.builder()
+                .bbsIdx(bbs_idx)
+                .userId(user_id)
+                .replyContent(replyContent)
+                .build();
+
+        log.info(boardReplyDTO);
+        int result = boardReplyService.regist(boardReplyDTO);
+        if(result>0){
+            resultMap.put("result","success");
+        }else{
+            resultMap.put("result","fail");
+        }
 
         return new Gson().toJson(resultMap);
     }

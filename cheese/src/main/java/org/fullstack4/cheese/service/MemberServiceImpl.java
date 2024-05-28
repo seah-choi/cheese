@@ -57,6 +57,7 @@ public class MemberServiceImpl implements MemberService {
 
                 session.setAttribute("user_id", id);
                 session.setAttribute("user_name", member.getUserName());
+                session.setAttribute("user_type", member.getUserType());
 
                 MemberDTO dto = modelMapper.map(member, MemberDTO.class);
                 dto.setLastloginDate(LocalDateTime.now());

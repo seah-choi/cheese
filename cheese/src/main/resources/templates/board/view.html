@@ -141,7 +141,6 @@
             <div class="min-height-200px">
                 <!-- basic table  Start -->
 
-                <form  action="/bbs/regist" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" >
                     <div id="list">
                         <th:block th:if="${boardDTO.bbsCategoryCode} == bbs01 ">
                             <h4 class="h4">중고상품 게시판</h4>
@@ -178,52 +177,96 @@
 
 
                         <div>
+                            <th:block th:if="${boardDTO.bbsCategoryCode == 'bbs03'}">
                             <div id="comment">
-                                <form name="frm" action="/bbsReply/regist" method="post">
-                                    <input type="hidden" name="member_id" value="${sessionScope.member_id}">
-                                    <input type="hidden" name="bbs_idx" value="${bbs.bbs_idx}">
+                                <th:block th:if="${session.user_id != null}">
+                                <form name="replyRegistfrm" action="/bbsReply/regist" method="POST">
+                                    <input type="hidden" name="bbsIdx" th:value="${boardDTO.bbsIdx}">
+                                    <input type="hidden" name="userId" th:value="${session.user_id}">
                                     <span>답변</span>&nbsp;<span id="cmCount">1</span>
                                     <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
-                                        <textarea class="form-control" placeholder="Leave a comment here" name="reply_content" id="floatingTextarea"></textarea>
-                                        <label for="floatingTextarea">댓글</label>
+                                        <textarea class="form-control" placeholder="Leave a comment here" name="replyContent" id="floatingTextarea"></textarea>
+<!--                                        <button type="button" class="btn" id="btn_comment" onclick="replyRegist()">등록</button>-->
                                         <button type="submit" class="btn" id="btn_comment">등록</button>
                                     </div>
                                 </form>
+                                </th:block>
+                                <th:block th:if="${session.user_id == null}">
+                                    <form name="replyRegistfrm" action="/bbsReply/regist" method="POST">
+                                        <input type="hidden" name="bbsIdx" th:value="${boardDTO.bbsIdx}">
+                                        <input type="hidden" name="userId" th:value="${session.user_id}">
+                                        <span>답변</span>&nbsp;<span id="cmCount">1</span>
+                                        <div class="form-floating" style="display: flex;margin-top: 10px;margin-bottom: 40px;">
+                                            <textarea class="form-control" placeholder="Leave a comment here" name="replyContent" id="floatingTextarea" disabled>회원만 댓글을 다실 수 있습니다.</textarea>
+                                            <!--                                        <button type="button" class="btn" id="btn_comment" onclick="replyRegist()">등록</button>-->
+                                            <button type="submit" class="btn" id="btn_comment" disabled>등록</button>
+                                        </div>
+                                    </form>
+                                </th:block>
                                 <div>
-                                    <c:choose>
-                                        <c:when test="${not empty reply}">
-                                            <c:forEach items="${reply}" var="reply">
-                                                <span style="font-weight: bold">bori</span>&nbsp;<span>2024-05-01</span>
-                                                <br>
-                                                <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
-                                                    <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" value="댓글입니다" id="reply_content" readonly></p>
-                                                    <c:if test="${reply.member_id == sessionScope.member_id}">
-                                                        <input type="hidden" name="reply_idx" value="${reply.reply_idx}">
-                                                        <input type="hidden" name="bbs_idx" value="${reply.bbs_idx}">
-                                                        <div style="display: flex;justify-content: flex-end;">
-                                                            <button type="button" class="cmModify" id="btnModify">수정</button>
-                                                            <span>&nbsp;|&nbsp;</span>
-                                                            <button type="button" class="cmDelete" id="cmDelete">삭제</button>
-                                                        </div>
-                                                </form>
-                                                </c:if>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div style="padding: 10px;">
-                                                등록된 댓글이 없습니다.
+                                    <th:block th:each="list : ${responseDTO.dtolist}">
+                                        <span style="font-weight: bold">[[${list.userId}]]</span>&nbsp;<span>[[${list.regDate}]]</span>
+                                        <br>
+                                        <form name="frm" id="cmFrm" class="cmFrm" action="/bbsReply/delete" method="post">
+                                            <p><input type="text" name="reply_content"  class="reply_content" style="border: 0" th:value="${list.replyContent}" id="reply_content" readonly></p>
+
+                                            <div style="display: flex;justify-content: flex-end;">
+                                                <th:block th:if="${list.userId == session.user_id}">
+                                                    <button type="button" class="cmDelete btn btn-primary" id="cmDelete" onclick="replyDelete(this)" th:value="${list.replyIdx}">삭제</button>
+                                                </th:block>
                                             </div>
-                                        </c:otherwise>
-                                    </c:choose>
+
+                                            <hr>
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${responseDTO.dtolist.size() == 0}">
+                                        <div style="padding: 10px;">
+                                            등록된 댓글이 없습니다.
+                                        </div>
+                                    </th:block>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                            <th:block th:if="${responseDTO.prev_page_plag == false}">
+                                                <li class="page-item disabled">
+                                            </th:block>
+                                            <th:block th:if="${responseDTO.prev_page_plag == true}">
+                                                <li class="page-item">
+                                            </th:block>
+                                            <a class="page-link" th:href="'/board/view?bbsIdx='+${boardDTO.bbsIdx}+'&page='+(${responseDTO.page_block_start}-10)" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                            </li>
+                                            <th:block th:each="number : ${#numbers.sequence(responseDTO.page_block_start, responseDTO.page_block_end)}">
+                                                <th:block th:if="(${number}-1) == ${responseDTO.page}">
+                                                    <li class="page-item active"><a class="page-link" th:href="'/board/view?bbsIdx='+${boardDTO.bbsIdx}+'&page='+(${number}-1)" th:text="${number}"></a></li>
+                                                </th:block>
+                                                <th:block th:if="(${number}-1) != ${responseDTO.page}">
+                                                    <li class="page-item"><a class="page-link" th:href="'/board/view?bbsIdx='+${boardDTO.bbsIdx}+'&page='+(${number}-1)+${responseDTO.linkParams}" th:text="${number}"></a></li>
+                                                </th:block>
+                                            </th:block>
+                                            <th:block th:if="${responseDTO.next_page_plag == false}">
+                                                <li class="page-item disabled">
+                                            </th:block>
+                                            <th:block th:if="${responseDTO.next_page_plag == true}">
+                                                <li class="page-item">
+                                            </th:block>
+                                            <a class="page-link" th:href="'/board/view?bbsIdx='+${boardDTO.bbsIdx}+'&page='+(${responseDTO.page_block_start}+10)" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+
                                 </div>
                             </div>
+                            </th:block>
                         </div>
 
                         <div class="topLine" style="display: flex;justify-content: center;">
                             <div>
                                 <button type="button" class="btn" id="btn_back" th:onclick="|location.href='@{/board/list(bbsCategoryCode=${boardDTO.bbsCategoryCode})}'|">목록</button>
                             </div>
-                            <th:block th:if="${boardDTO.userId == session.user_id}">
+                            <th:block th:if="${boardDTO.userId == session.user_id || session.user_type == 'admin'}">
                             <div>
                                 <button type="button" class="btn" id="btn_modify" th:onclick="|location.href='@{/board/modify(bbsIdx=${boardDTO.bbsIdx})}'|">수정</button>
                                 <button type="button" class="btn btn-secondary" th:onclick="bbs_delete()" id="btn_delete">삭제</button>
@@ -231,7 +274,6 @@
                             </th:block>
                         </div>
                     </div>
-                </form>
 
             </div>
         </div>
@@ -267,6 +309,64 @@
 
             });
         }
+    }
+
+    function replyRegist(){
+
+        let frmData = $("form[name=replyRegistfrm]").serialize();
+        frmData = decodeURIComponent(frmData);
+        console.log(frmData);
+        $.ajax({
+            url:"/board/replyregist.dox?"+frmData,
+            dataType:"json",
+            type : "POST",
+            data : {
+            },
+            success : function(data) {
+                if(data.result == "success"){
+                    alert("댓글 등록에 성공하였습니다.");
+                    location.replace("/board/view?bbsIdx="+[[${boardDTO.bbsIdx}]]);
+                }else{
+                    alert("등록 실패");
+                }
+            },
+            fail : function (data){
+                alert("등록 실패");
+            }, error: function(xhr, status, error) {
+                alert("에러가 발생했습니다. 오류: " + error);
+            }
+
+        });
+    }
+
+    function replyModify(){
+
+    }
+
+    function replyDelete(item){
+        let idx = item.value;
+        $.ajax({
+            url:"/bbsReply/delete.dox?",
+            dataType:"json",
+            type : "POST",
+            data : {
+                idx:item.value
+            },
+            success : function(data) {
+                if(data.result == "success"){
+                    alert("댓글 삭제 성공하였습니다.");
+                    location.reload();
+                }else{
+                    alert("삭제 실패");
+                }
+            },
+            fail : function (data){
+                alert("등록 실패");
+            }, error: function(xhr, status, error) {
+                alert("에러가 발생했습니다. 오류: " + error);
+            }
+
+        });
     }
 </script>
 </body>
