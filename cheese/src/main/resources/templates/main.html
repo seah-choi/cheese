@@ -116,11 +116,11 @@
                             <th:block th:with="totalcount=${iterStat.count}">
                                 <tr>
                                     <th scope="row">[[${totalcount}]]</th>
-                                <td><a href="/board/view?bbs_idx=${list.bbs_idx}">[[${list.bbsTitle}]]</a></td>
-                                <td>[[${list.userId}]]</td>
-                                <td>[[${list.regDate}]]</td>
-                                <td>[[${list.bbsReadCnt}]]</td>
-                            </tr>
+                                    <td><a th:href="'/board/view?bbsIdx='+${list.bbsIdx}">[[${list.bbsTitle}]]</a></td>
+                                    <td>[[${list.userId}]]</td>
+                                    <td>[[${list.regDate}]]</td>
+                                    <td>[[${list.bbsReadCnt}]]</td>
+                                </tr>
                             </th:block>
                         </th:block>
                         </tbody>
@@ -149,7 +149,7 @@
                             <th:block th:with="totalcount=${iterStat.count}">
                                 <tr>
                                     <th scope="row">[[${totalcount}]]</th>
-                                    <td><a href="/board/view?bbs_idx=${list.bbs_idx}">[[${list.bbsTitle}]]</a></td>
+                                    <td><a th:href="'/board/view?bbsIdx='+${list.bbsIdx}">[[${list.bbsTitle}]]</a></td>
                                     <td>[[${list.userId}]]</td>
                                     <td>[[${list.regDate}]]</td>
                                     <td>[[${list.bbsReadCnt}]]</td>
@@ -160,6 +160,72 @@
                     </table>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="bd-example">
+                    <div class="boardDiv">
+                        <h4>공지사항 게시판</h4>
+                    </div>
+                    <table class="table table-hover tableDiv">
+                        <thead>
+                        <tr>
+                            <th>순위</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>등록일</th>
+                            <th>조회수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="list, iterStat : ${noticeList}">
+                            <th:block th:with="totalcount=${iterStat.count}">
+                                <tr>
+                                    <th scope="row">[[${totalcount}]]</th>
+                                    <td><a th:href="'/board/view?bbsIdx='+${list.bbsIdx}">[[${list.bbsTitle}]]</a></td>
+                                    <td>[[${list.userId}]]</td>
+                                    <td>[[${list.regDate}]]</td>
+                                    <td>[[${list.bbsReadCnt}]]</td>
+                                </tr>
+                            </th:block>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="bd-example">
+                    <table class="table table-hover tableDiv">
+                        <div class="boardDiv">
+                            <h4>중고상품 게시판</h4>
+                        </div>
+                        <thead>
+                        <tr>
+                            <th>NO.</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>등록일</th>
+                            <th>조회수</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <th:block th:each="list, iterStat : ${productList}">
+                            <th:block th:with="totalcount=${iterStat.count}">
+                                <tr>
+                                    <th scope="row">[[${totalcount}]]</th>
+                                    <td><a th:href="'/board/view?bbsIdx='+${list.bbsIdx}">[[${list.bbsTitle}]]</a></td>
+                                    <td>[[${list.userId}]]</td>
+                                    <td>[[${list.regDate}]]</td>
+                                    <td>[[${list.bbsReadCnt}]]</td>
+                                </tr>
+                            </th:block>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

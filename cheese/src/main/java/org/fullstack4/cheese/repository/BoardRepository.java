@@ -9,4 +9,5 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer>, BoardPagingSearch {
     List<BoardEntity> findAllByOrderByBbsGoodDesc();
     List<BoardEntity> findAllByOrderByBbsReadCntDesc();
+    List<BoardEntity> findAllByBbsCategoryCode(String bbs_category_code);
 }

@@ -26,4 +26,5 @@ public interface BoardService {
     List<BoardDTO> todayList(String userId, LocalDate date);
     List<BoardDTO> mainReadCntList();
     List<BoardDTO> mainGoodList();
+    List<BoardDTO> mainBoardList(String bbs_category_code);
 }

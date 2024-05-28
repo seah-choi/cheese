@@ -160,4 +160,13 @@ public class BoardServiceImpl implements BoardService {
                 .collect(Collectors.toList());
         return dtoList;
     }
+
+    @Override
+    public List<BoardDTO> mainBoardList(String bbs_category_code) {
+        List<BoardEntity> entityList = boardRepository.findAllByBbsCategoryCode(bbs_category_code);
+        List<BoardDTO> dtoList = entityList.stream().map(vo-> modelMapper.map(vo, BoardDTO.class))
+                .limit(5)
+                .collect(Collectors.toList());
+        return dtoList;
+    }
 }
